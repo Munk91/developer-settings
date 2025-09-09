@@ -15,7 +15,8 @@ link_file() {
       info "Already linked: $dest"
       return
     fi
-    local backup="${dest}.bak.$(date +%s)"
+    local backup
+    backup="${dest}.bak.$(date +%s)"
     mv "$dest" "$backup"
     info "Backed up existing to $backup"
   fi

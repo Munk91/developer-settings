@@ -5,6 +5,18 @@ source "$REPO_ROOT/scripts/common.sh"
 
 [[ "$(uname -s)" != "Darwin" ]] && { error "This script is for macOS only"; exit 1; }
 
+# Check dependencies
+info "Checking system dependencies..."
+if ! command -v curl >/dev/null 2>&1; then
+  error "curl is required but not installed. Please install curl first."
+  exit 1
+fi
+
+if ! command -v git >/dev/null 2>&1; then
+  error "git is required but not installed. Please install git first."
+  exit 1
+fi
+
 # 1) Homebrew
 if ! command -v brew >/dev/null 2>&1; then
   info "Installing Homebrew…"
@@ -26,10 +38,13 @@ else
 fi
 
 # Ensure Meslo Nerd Font installed
-if ! ls ~/Library/Fonts | grep -qi "MesloLGS NF"; then
+if ! ls ~/Library/Fonts/*MesloLGS* 2>/dev/null >/dev/null; then
   info "Installing Meslo Nerd Fonts..."
-  brew tap homebrew/cask-fonts || true
-  brew install --cask font-meslo-lg-nerd-font
+  if brew tap homebrew/cask-fonts && brew install --cask font-meslo-lg-nerd-font; then
+    info "Meslo Nerd Font installed successfully"
+  else
+    warn "Failed to install Meslo Nerd Font via Homebrew. You may need to install it manually."
+  fi
 fi
 
 # 3) Shell: Oh My Zsh + Atuin hook
@@ -61,7 +76,16 @@ link_file "$REPO_ROOT/dotfiles/zsh/.zshrc"          "$HOME/.zshrc"
 [[ -f "$REPO_ROOT/dotfiles/zsh/aliases.zsh" ]]   && link_file "$REPO_ROOT/dotfiles/zsh/aliases.zsh"   "$HOME/.zsh/aliases.zsh"
 [[ -f "$REPO_ROOT/dotfiles/zsh/functions.zsh" ]] && link_file "$REPO_ROOT/dotfiles/zsh/functions.zsh" "$HOME/.zsh/functions.zsh"
 [[ -f "$REPO_ROOT/dotfiles/vim/.vimrc" ]]        && link_file "$REPO_ROOT/dotfiles/vim/.vimrc"        "$HOME/.vimrc"
-[[ -f "$REPO_ROOT/dotfiles/git/.gitconfig" ]]    && link_file "$REPO_ROOT/dotfiles/git/.gitconfig"    "$HOME/.gitconfig"
+
+# Git configuration - check if template exists and warn user
+if [[ -f "$REPO_ROOT/dotfiles/git/.gitconfig" ]]; then
+  if grep -q "your-email@example.com" "$REPO_ROOT/dotfiles/git/.gitconfig"; then
+    warn "Git config contains template values. After bootstrap, run:"
+    warn "  git config --global user.name 'Your Full Name'"
+    warn "  git config --global user.email 'your-email@example.com'"
+  fi
+  link_file "$REPO_ROOT/dotfiles/git/.gitconfig" "$HOME/.gitconfig"
+fi
 [[ -f "$REPO_ROOT/dotfiles/git/.gitignore_global" ]] && link_file "$REPO_ROOT/dotfiles/git/.gitignore_global" "$HOME/.gitignore_global"
 
 # 5) VSCode settings + extensions
@@ -90,4 +114,4 @@ fi
 # 7) Caps Lock -> Escape (mac)
 bash "$REPO_ROOT/scripts/macos/keyboard.sh"
 
-info "macOS bootstrap complete. For Raycast: open Raycast and run “Import Settings & Data”, choose $REPO_ROOT/raycast/raycast.rayconfig"
+info "macOS bootstrap complete. For Raycast: open Raycast and run "Import Settings & Data", choose $REPO_ROOT/raycast/raycast.rayconfig"
