@@ -1,0 +1,7 @@
+[user]
+	email = mimu@tv2.dk
+	name = Mikkel Bendix Munk
+[push]
+	default = current
+	autoSetupRemote = true
+	followTags = true

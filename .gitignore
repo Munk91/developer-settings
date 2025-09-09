@@ -1,0 +1,18 @@
+# Atuin history DB / secrets
+**/atuin/history.db
+**/.local/share/atuin/**
+*.key
+*.session
+
+# Raycast exports are fine to commit, but ignore random dumps
+*.rayconfig.backup
+
+# macOS noise
+.DS_Store
+
+# Node / Python build caches if you ever add projects
+node_modules/
+__pycache__/
+
+# Secrets (never commit)
+.zsh_secrets

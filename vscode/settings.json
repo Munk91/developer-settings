@@ -1,0 +1,90 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontSize": 13,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.lineNumbers": "relative",
+  "editor.rename.enablePreview": false,
+  "eslint.format.enable": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "git.openRepositoryInParentFolders": "never",
+  "gitlens.defaultDateFormat": null,
+  "gitlens.defaultDateLocale": "system",
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "settingsSync.ignoredSettings": [],
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "vim.leader": ",",
+  "vim.scroll": 20,
+  "vim.timeout": 100,
+  "vim.vimrc.enable": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"],
+      "commands": ["undo"]
+    },
+    {
+      "before": ["c-r"],
+      "commands": ["redo"]
+    }
+  ],
+  "workbench.colorTheme": "Night Owl (No Italics)",
+  "workbench.editor.enablePreview": false,
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "editor.minimap.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "git.autofetch": true,
+  "rust-analyzer.hover.actions.references.enable": true,
+  "gitlens.ai.experimental.provider": "openai",
+  "gitlens.ai.experimental.openai.model": "gpt-3.5-turbo-1106",
+  "eslint.run": "onSave",
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "githubPullRequests.pullBranch": "never",
+  "debug.allowBreakpointsEverywhere": true,
+  "security.promptForLocalFileProtocolHandling": false,
+  "codium.agent.onSave.improve": true,
+  "codium.agent.onSave.issues": true,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "explorer.confirmPasteNative": false,
+  "makefile.configureOnOpen": true,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "gopls": {
+    "gopls.ui.semanticTokens": true,
+    "gopls.ui.navigation.importShortcut": "Definition",
+    "gopls.ui.diagnostic.staticcheck": true,
+    "gopls.ui.diagnostic.analyses": {
+      "nilness": true
+    }
+  },
+  "go.inlayHints.compositeLiteralFields": true,
+  "go.inlayHints.compositeLiteralTypes": true,
+  "go.inlayHints.functionTypeParameters": true,
+  "go.inlayHints.parameterNames": true,
+  "go.inlayHints.rangeVariableTypes": true,
+  "go.inlayHints.constantValues": true,
+  "go.toolsManagement.autoUpdate": true,
+  "[go.mod]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": ["--fast"],
+  "chat.editing.alwaysSaveWithGeneratedChanges": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "java.import.gradle.wrapper.enabled": false,
+  "java.import.gradle.version": "7.3",
+  "chat.editing.confirmEditRequestRetry": false,
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3.12"
+}
