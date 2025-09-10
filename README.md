@@ -1,152 +1,249 @@
 # Developer Settings
 
-Personal developer environment setup repository to make it easier to bootstrap a new development machine.
+A comprehensive development environment setup repository that automates the installation and configuration of development tools, applications, and dotfiles for macOS and Ubuntu systems.
 
-## What's Included
+## 🚀 What This Repository Provides
 
-- **Package Management**: Comprehensive Brewfile with development tools, languages, and applications
-- **Shell Configuration**: Zsh with Oh My Zsh, Powerlevel10k theme, and Atuin history sync
-- **Dotfiles**: Git, Vim, Zsh configurations
-- **VSCode**: Settings, keybindings, and curated extension list
-- **Platform Support**: Bootstrap scripts for both macOS and Ubuntu
-- **Raycast**: Configuration export/import
+This repository contains everything needed to quickly set up a complete development environment, including:
 
-## Quick Start
+- **Development Tools**: Programming languages (Go, Python, Node.js, Rust, Java), version managers (nvm, pyenv, mise), and build tools
+- **Command Line Tools**: Modern CLI utilities (atuin for shell history, kubectl, docker, gh CLI)
+- **Applications**: Docker, Raycast, VirtualBox, and essential fonts
+- **IDE Setup**: Complete VS Code configuration with 70+ extensions for various programming languages
+- **Shell Configuration**: Zsh with oh-my-zsh, powerlevel10k theme, and useful plugins
+- **Git Configuration**: Pre-configured git settings and aliases
+- **Container & Cloud Tools**: Docker, Kubernetes, Terraform, and cloud CLI tools
+
+## 📋 Prerequisites
 
 ### macOS
-```bash
-git clone https://github.com/Munk91/developer-settings.git
-cd developer-settings
-./scripts/bootstrap-mac.sh
-```
+- macOS 10.15 (Catalina) or later
+- Command Line Tools for Xcode (will be installed automatically if missing)
+- Administrator access for installing applications
 
 ### Ubuntu/Linux
-```bash
-git clone https://github.com/Munk91/developer-settings.git
-cd developer-settings
-./scripts/bootstrap-ubuntu.sh
+- Ubuntu 18.04 LTS or later (or compatible Debian-based distribution)
+- sudo access
+- Internet connection for downloading packages
+
+## ⚡ Quick Start
+
+### macOS Installation
+
+1. **Clone this repository:**
+   ```bash
+   git clone https://github.com/Munk91/developer-settings.git
+   cd developer-settings
+   ```
+
+2. **Run the bootstrap script:**
+   ```bash
+   ./scripts/bootstrap-mac.sh
+   ```
+
+3. **Follow the prompts** and let the script install everything automatically
+
+### Ubuntu Installation
+
+1. **Clone this repository:**
+   ```bash
+   git clone https://github.com/Munk91/developer-settings.git
+   cd developer-settings
+   ```
+
+2. **Run the bootstrap script:**
+   ```bash
+   ./scripts/bootstrap-ubuntu.sh
+   ```
+
+3. **Follow the prompts** and let the script install everything automatically
+
+## 📂 Repository Structure
+
+```
+developer-settings/
+├── Brewfile                 # Homebrew packages and applications
+├── SECURITY.md             # Security guidelines and best practices
+├── VSCode-README.md        # VSCode configuration documentation
+├── scripts/
+│   ├── bootstrap-mac.sh     # macOS setup script
+│   ├── bootstrap-ubuntu.sh  # Ubuntu setup script
+│   ├── common.sh           # Shared utilities
+│   └── export.sh           # Configuration export utilities
+├── dotfiles/
+│   ├── git/                # Git configuration
+│   │   ├── .gitconfig      # Git settings and aliases
+│   │   └── .gitconfig.template # Template for personal git config
+│   ├── zsh/                # Zsh shell configuration
+│   ├── vim/                # Vim configuration
+│   └── atuin/              # Shell history configuration
+├── vscode/
+│   ├── settings.json       # VS Code settings
+│   ├── keybindings.json    # Custom keybindings
+│   └── extensions.txt      # List of extensions
+└── raycast/                # Raycast configuration (macOS)
 ```
 
-## What Gets Installed
+## 🔧 What Gets Installed
 
-### Core Tools
-- **Homebrew** (package manager)
-- **Git**, **curl**, **wget** (essentials)
-- **Zsh** with Oh My Zsh and Powerlevel10k theme
-- **Atuin** (shell history sync)
-- **VSCode** with extensions and settings
+### Core Development Tools
+- **Languages**: Go, Python 3.11, Node.js, TypeScript, Rust, Java (OpenJDK)
+- **Version Managers**: nvm (Node), pyenv (Python), mise (universal version manager)
+- **Package Managers**: npm, yarn, pnpm, pip
+- **Build Tools**: CMake, Gradle, Vite
 
-### Development Languages & Runtimes
-- **Node.js** (via nvm - latest LTS)
-- **Python** (via pyenv - latest 3.x)
-- **Go**, **Rust** (via rustup)
-- **Java** (OpenJDK)
+### Command Line Utilities
+- **Shell**: Zsh with oh-my-zsh and powerlevel10k theme
+- **Git**: GitHub CLI (gh), GitLens
+- **History**: Atuin (encrypted shell history sync)
+- **Containers**: Docker, kubectl, helm, k9s
+- **Cloud/Infrastructure**: Terraform, MongoDB tools, PlanetScale CLI
+- **Utilities**: curl, wget, parallel, jq
 
-### Development Tools
-- **Docker** (with Colima on macOS)
-- **Kubernetes** tools (kubectl, helm, k9s)
-- **Terraform**
-- **GitHub CLI** (gh)
+### Applications (macOS via Homebrew Cask)
+- **Productivity**: Raycast (launcher and productivity tool)
+- **Development**: Visual Studio Code (with 70+ extensions)
+- **Virtualization**: VirtualBox, Lima, Colima
+- **Fonts**: Meslo LG Nerd Font (for terminal icons)
 
-### Applications (GUI)
-- **Visual Studio Code**
-- **Raycast** (macOS productivity tool)
-- **Browsers**: Firefox, Google Chrome
-- **Communication**: Slack
-- **Development**: Postman
+### VS Code Extensions
+Over 70 carefully selected extensions including:
+- **AI Assistants**: GitHub Copilot, Claude, ChatGPT
+- **Languages**: Go, Python, Rust, Java, TypeScript, GraphQL
+- **Themes**: Multiple color themes (Night Owl, Tokyo Night, Gruvbox, etc.)
+- **Productivity**: GitLens, Error Lens, Prettier, ESLint
+- **Containers**: Docker, Kubernetes support
 
-## Configuration
+**Note**: See `VSCode-README.md` for detailed information about the VS Code configuration setup and dual workspace approach.
 
-### Personal Git Setup
-After running the bootstrap script, update your git configuration:
+## 📖 Detailed Usage
 
+### Running Individual Components
+
+If you want to install specific components rather than running the full bootstrap:
+
+**Install just the Homebrew packages:**
 ```bash
-git config --global user.name "Your Full Name"
-git config --global user.email "your-email@example.com"
+brew bundle --file=Brewfile
 ```
 
-### Secret Files
-Create these files for personal/sensitive configurations:
+**Install VS Code extensions only:**
+```bash
+cat vscode/extensions.txt | xargs -I {} code --install-extension {}
+```
 
-- `~/.zsh_secrets` - Personal environment variables and API keys
-- Atuin configuration is handled automatically during bootstrap
+**Apply dotfiles:**
+```bash
+# The bootstrap scripts will do this, but you can also manually link:
+ln -sf $(pwd)/dotfiles/git/.gitconfig ~/.gitconfig
+ln -sf $(pwd)/dotfiles/zsh/.zshrc ~/.zshrc
+```
 
-### Raycast Import
-For Raycast settings:
-1. Open Raycast
-2. Run "Import Settings & Data"
-3. Choose `raycast/raycast.rayconfig` from this repository
+### Customizing the Setup
 
-## Customization
+1. **Modify the Brewfile** to add/remove packages:
+   ```bash
+   # Add a new package
+   echo 'brew "package-name"' >> Brewfile
+   
+   # Install the new package
+   brew bundle --file=Brewfile
+   ```
 
-### Export Current Settings
-To update this repository with your current configurations:
+2. **Update VS Code extensions**:
+   - Edit `vscode/extensions.txt`
+   - Run: `cat vscode/extensions.txt | xargs -I {} code --install-extension {}`
+
+3. **Customize shell configuration**:
+   - Edit `dotfiles/zsh/.zshrc`
+   - Restart your terminal or run: `source ~/.zshrc`
+
+### Exporting Your Current Configuration
+
+To export your current setup and update this repository:
 
 ```bash
 ./scripts/export.sh
 ```
 
-This will copy your current dotfiles, VSCode settings, and generate a new Brewfile.
+This will update the configuration files with your current settings.
 
-### Adding New Packages
-Edit `Brewfile` to add new tools:
+## 🔍 Platform-Specific Notes
 
-```ruby
-# CLI tools
-brew "new-tool"
+### macOS
+- Installs Homebrew if not present
+- Uses Homebrew Cask for GUI applications
+- Configures Raycast for productivity
+- Installs Nerd Fonts for terminal themes
 
-# GUI applications  
-cask "new-app"
+### Ubuntu/Linux
+- Installs Linuxbrew for CLI tools
+- Uses apt for system packages
+- Installs VS Code via Microsoft's apt repository
+- Sets up Docker via official installation script
 
-# VSCode extensions
-vscode "publisher.extension-name"
-```
+## 🔒 Security Considerations
 
-## Security Notes
+This repository includes comprehensive security documentation and best practices:
 
-- Personal secrets are excluded via `.gitignore`
-- Store sensitive environment variables in `~/.zsh_secrets` (not tracked by git)
-- Atuin history database and session files are excluded from git
-- Review the Brewfile before running to understand what will be installed
+- **Security Documentation**: See `SECURITY.md` for detailed security guidelines and best practices
+- **Template Configurations**: Personal information has been removed from tracked files - use `.gitconfig.template` to set up your personal git configuration
+- **Dependency Validation**: Bootstrap scripts validate required tools before making system changes
+- **No Secrets in Git**: Personal secrets, API keys, and sensitive data are excluded via `.gitignore`
+- **Script Safety**: All scripts include error handling and dependency checks before execution
 
-## Troubleshooting
-
-### Script Permissions
-If you get permission errors, ensure scripts are executable:
+**Important**: After running the bootstrap script, configure your personal git settings using the template:
 ```bash
-chmod +x scripts/*.sh scripts/*/*.sh
+cp dotfiles/git/.gitconfig.template ~/.gitconfig
+# Then edit ~/.gitconfig with your personal information
 ```
 
-### Font Issues
-If terminal fonts look incorrect, install Meslo Nerd Font manually:
+Store sensitive environment variables in `~/.zsh_secrets` (automatically excluded from git tracking).
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Permission denied errors:**
 ```bash
-brew install --cask font-meslo-lg-nerd-font
+# Make scripts executable
+chmod +x scripts/*.sh
 ```
 
-### VSCode Extensions
-If VSCode extensions fail to install, try:
+**Homebrew installation fails:**
 ```bash
-code --install-extension-list vscode/extensions.txt
+# Install Command Line Tools manually
+xcode-select --install
 ```
 
-## File Structure
+**VS Code extensions fail to install:**
+```bash
+# Install VS Code first, then run:
+cat vscode/extensions.txt | xargs -I {} code --install-extension {}
+```
 
+**Shell theme not loading:**
+```bash
+# Restart terminal or source the configuration
+source ~/.zshrc
 ```
-├── Brewfile                 # Homebrew packages and VSCode extensions
-├── dotfiles/               # Shell and tool configurations
-│   ├── git/               # Git configuration and global gitignore
-│   ├── vim/               # Vim configuration  
-│   ├── zsh/               # Zsh and shell configurations
-│   └── atuin/             # Atuin shell history sync config
-├── scripts/               # Setup and utility scripts
-│   ├── bootstrap-mac.sh   # macOS setup script
-│   ├── bootstrap-ubuntu.sh # Ubuntu setup script
-│   ├── export.sh          # Export current configs to this repo
-│   └── common.sh          # Shared functions
-├── vscode/                # VSCode settings and extensions
-│   ├── settings.json      # Editor settings
-│   ├── keybindings.json   # Custom keybindings
-│   └── extensions.txt     # Extension list
-└── raycast/               # Raycast configuration
-    └── raycast.rayconfig  # Raycast settings export
-```
+
+### Getting Help
+
+1. Check the script output for specific error messages
+2. Ensure you have the required prerequisites
+3. Try running individual components to isolate issues
+4. Check that you have sufficient disk space and internet connectivity
+
+## 🤝 Contributing
+
+Feel free to customize this setup for your own needs:
+
+1. Fork this repository
+2. Modify the configurations to match your preferences
+3. Test the setup on a clean system
+4. Update the documentation if you add new features
+
+## 📝 License
+
+This repository contains personal development configurations and is provided as-is for educational and personal use.
