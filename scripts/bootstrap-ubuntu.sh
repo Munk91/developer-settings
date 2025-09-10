@@ -5,6 +5,23 @@ source "$REPO_ROOT/scripts/common.sh"
 
 [[ "$(uname -s)" != "Linux" ]] && { error "This script is for Linux only"; exit 1; }
 
+# Check dependencies
+info "Checking system dependencies..."
+if ! command -v curl >/dev/null 2>&1; then
+  error "curl is required but not installed. Installing curl..."
+  sudo apt-get update -y && sudo apt-get install -y curl
+fi
+
+if ! command -v wget >/dev/null 2>&1; then
+  error "wget is required but not installed. Installing wget..."
+  sudo apt-get update -y && sudo apt-get install -y wget
+fi
+
+if ! command -v git >/dev/null 2>&1; then
+  error "git is required but not installed. Installing git..."
+  sudo apt-get update -y && sudo apt-get install -y git
+fi
+
 # 1) Basics
 sudo apt-get update -y
 sudo apt-get install -y build-essential curl wget git ca-certificates gnupg lsb-release unzip
@@ -59,14 +76,19 @@ else
 fi
 
 # Meslo Nerd Fonts
-if ! fc-list | grep -qi "MesloLGS NF"; then
+if ! fc-list 2>/dev/null | grep -qi "MesloLGS NF"; then
   info "Installing Meslo Nerd Fonts..."
-  brew tap homebrew/cask-fonts || true
-  brew install --cask font-meslo-lg-nerd-font
-
-  mkdir -p "$HOME/.local/share/fonts"
-  cp -f $(brew --prefix)/Caskroom/font-meslo-lg-nerd-font/*/*/*.ttf "$HOME/.local/share/fonts/" || true
-  fc-cache -fv
+  if brew tap homebrew/cask-fonts && brew install --cask font-meslo-lg-nerd-font; then
+    mkdir -p "$HOME/.local/share/fonts"
+    if cp -f "$(brew --prefix)"/Caskroom/font-meslo-lg-nerd-font/*/*/*.ttf "$HOME/.local/share/fonts/" 2>/dev/null; then
+      fc-cache -fv
+      info "Meslo Nerd Font installed successfully"
+    else
+      warn "Font files copied but may not be in expected location"
+    fi
+  else
+    warn "Failed to install Meslo Nerd Font via Homebrew. You may need to install it manually."
+  fi
 fi
 
 # 5) Oh My Zsh + Atuin hook
@@ -99,7 +121,16 @@ link_file "$REPO_ROOT/dotfiles/zsh/.zshrc"          "$HOME/.zshrc"
 [[ -f "$REPO_ROOT/dotfiles/zsh/aliases.zsh" ]]   && link_file "$REPO_ROOT/dotfiles/zsh/aliases.zsh"   "$HOME/.zsh/aliases.zsh"
 [[ -f "$REPO_ROOT/dotfiles/zsh/functions.zsh" ]] && link_file "$REPO_ROOT/dotfiles/zsh/functions.zsh" "$HOME/.zsh/functions.zsh"
 [[ -f "$REPO_ROOT/dotfiles/vim/.vimrc" ]]        && link_file "$REPO_ROOT/dotfiles/vim/.vimrc"        "$HOME/.vimrc"
-[[ -f "$REPO_ROOT/dotfiles/git/.gitconfig" ]]    && link_file "$REPO_ROOT/dotfiles/git/.gitconfig"    "$HOME/.gitconfig"
+
+# Git configuration - check if template exists and warn user
+if [[ -f "$REPO_ROOT/dotfiles/git/.gitconfig" ]]; then
+  if grep -q "your-email@example.com" "$REPO_ROOT/dotfiles/git/.gitconfig"; then
+    warn "Git config contains template values. After bootstrap, run:"
+    warn "  git config --global user.name 'Your Full Name'"
+    warn "  git config --global user.email 'your-email@example.com'"
+  fi
+  link_file "$REPO_ROOT/dotfiles/git/.gitconfig" "$HOME/.gitconfig"
+fi
 [[ -f "$REPO_ROOT/dotfiles/git/.gitignore_global" ]] && link_file "$REPO_ROOT/dotfiles/git/.gitignore_global" "$HOME/.gitignore_global"
 
 # 7) VSCode settings + extensions

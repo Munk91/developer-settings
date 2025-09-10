@@ -13,8 +13,12 @@ if [[ -f "$HOME/.zshrc" ]]; then
   cp -f "$HOME/.zshrc" "$REPO_ROOT/dotfiles/zsh/.zshrc"
   info "Copied .zshrc"
 fi
-[[ -f "$HOME/.zsh/aliases.zsh" ]]     && cp -f "$HOME/.zsh/aliases.zsh"     "$REPO_ROOT/dotfiles/zsh/aliases.zsh" || true
-[[ -f "$HOME/.zsh/functions.zsh" ]]   && cp -f "$HOME/.zsh/functions.zsh"   "$REPO_ROOT/dotfiles/zsh/functions.zsh" || true
+if [[ -f "$HOME/.zsh/aliases.zsh" ]]; then
+  cp -f "$HOME/.zsh/aliases.zsh" "$REPO_ROOT/dotfiles/zsh/aliases.zsh"
+fi
+if [[ -f "$HOME/.zsh/functions.zsh" ]]; then
+  cp -f "$HOME/.zsh/functions.zsh" "$REPO_ROOT/dotfiles/zsh/functions.zsh"
+fi
 
 # --- Powerlevel10k
 if [[ -f "$HOME/.p10k.zsh" ]]; then
@@ -23,11 +27,17 @@ if [[ -f "$HOME/.p10k.zsh" ]]; then
 fi
 
 # --- Vim
-[[ -f "$HOME/.vimrc" ]] && cp -f "$HOME/.vimrc" "$REPO_ROOT/dotfiles/vim/.vimrc" || true
+if [[ -f "$HOME/.vimrc" ]]; then
+  cp -f "$HOME/.vimrc" "$REPO_ROOT/dotfiles/vim/.vimrc"
+fi
 
 # --- Git
-[[ -f "$HOME/.gitconfig" ]]         && cp -f "$HOME/.gitconfig"         "$REPO_ROOT/dotfiles/git/.gitconfig" || true
-[[ -f "$HOME/.gitignore_global" ]]  && cp -f "$HOME/.gitignore_global"  "$REPO_ROOT/dotfiles/git/.gitignore_global" || true
+if [[ -f "$HOME/.gitconfig" ]]; then
+  cp -f "$HOME/.gitconfig" "$REPO_ROOT/dotfiles/git/.gitconfig"
+fi
+if [[ -f "$HOME/.gitignore_global" ]]; then
+  cp -f "$HOME/.gitignore_global" "$REPO_ROOT/dotfiles/git/.gitignore_global"
+fi
 
 # --- VSCode
 VSC_USER_DIR=""
@@ -37,9 +47,15 @@ elif [[ "$OS" == "linux" ]]; then
   VSC_USER_DIR="$HOME/.config/Code/User"
 fi
 if [[ -d "$VSC_USER_DIR" ]]; then
-  [[ -f "$VSC_USER_DIR/settings.json"    ]] && cp -f "$VSC_USER_DIR/settings.json"    "$REPO_ROOT/vscode/settings.json" || true
-  [[ -f "$VSC_USER_DIR/keybindings.json" ]] && cp -f "$VSC_USER_DIR/keybindings.json" "$REPO_ROOT/vscode/keybindings.json" || true
-  [[ -d "$VSC_USER_DIR/snippets" ]] && rsync -a --delete "$VSC_USER_DIR/snippets/" "$REPO_ROOT/vscode/snippets/" || true
+  if [[ -f "$VSC_USER_DIR/settings.json" ]]; then
+    cp -f "$VSC_USER_DIR/settings.json" "$REPO_ROOT/vscode/settings.json"
+  fi
+  if [[ -f "$VSC_USER_DIR/keybindings.json" ]]; then
+    cp -f "$VSC_USER_DIR/keybindings.json" "$REPO_ROOT/vscode/keybindings.json"
+  fi
+  if [[ -d "$VSC_USER_DIR/snippets" ]]; then
+    rsync -a --delete "$VSC_USER_DIR/snippets/" "$REPO_ROOT/vscode/snippets/"
+  fi
   # extensions list
   if command -v code >/dev/null 2>&1; then
     code --list-extensions | sort > "$REPO_ROOT/vscode/extensions.txt"
@@ -51,7 +67,9 @@ fi
 
 # --- Atuin
 if command -v atuin >/dev/null 2>&1; then
-  [[ -f "$HOME/.config/atuin/config.toml" ]] && cp -f "$HOME/.config/atuin/config.toml" "$REPO_ROOT/dotfiles/atuin/config.toml" || true
+  if [[ -f "$HOME/.config/atuin/config.toml" ]]; then
+    cp -f "$HOME/.config/atuin/config.toml" "$REPO_ROOT/dotfiles/atuin/config.toml"
+  fi
   # NOTE: history DB is sensitive / large; we do NOT copy it by default.
   info "Copied Atuin config.toml (not the database)"
 fi

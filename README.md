@@ -63,6 +63,8 @@ This repository contains everything needed to quickly set up a complete developm
 ```
 developer-settings/
 ├── Brewfile                 # Homebrew packages and applications
+├── SECURITY.md             # Security guidelines and best practices
+├── VSCode-README.md        # VSCode configuration documentation
 ├── scripts/
 │   ├── bootstrap-mac.sh     # macOS setup script
 │   ├── bootstrap-ubuntu.sh  # Ubuntu setup script
@@ -70,6 +72,8 @@ developer-settings/
 │   └── export.sh           # Configuration export utilities
 ├── dotfiles/
 │   ├── git/                # Git configuration
+│   │   ├── .gitconfig      # Git settings and aliases
+│   │   └── .gitconfig.template # Template for personal git config
 │   ├── zsh/                # Zsh shell configuration
 │   ├── vim/                # Vim configuration
 │   └── atuin/              # Shell history configuration
@@ -109,6 +113,8 @@ Over 70 carefully selected extensions including:
 - **Themes**: Multiple color themes (Night Owl, Tokyo Night, Gruvbox, etc.)
 - **Productivity**: GitLens, Error Lens, Prettier, ESLint
 - **Containers**: Docker, Kubernetes support
+
+**Note**: See `VSCode-README.md` for detailed information about the VS Code configuration setup and dual workspace approach.
 
 ## 📖 Detailed Usage
 
@@ -175,6 +181,24 @@ This will update the configuration files with your current settings.
 - Uses apt for system packages
 - Installs VS Code via Microsoft's apt repository
 - Sets up Docker via official installation script
+
+## 🔒 Security Considerations
+
+This repository includes comprehensive security documentation and best practices:
+
+- **Security Documentation**: See `SECURITY.md` for detailed security guidelines and best practices
+- **Template Configurations**: Personal information has been removed from tracked files - use `.gitconfig.template` to set up your personal git configuration
+- **Dependency Validation**: Bootstrap scripts validate required tools before making system changes
+- **No Secrets in Git**: Personal secrets, API keys, and sensitive data are excluded via `.gitignore`
+- **Script Safety**: All scripts include error handling and dependency checks before execution
+
+**Important**: After running the bootstrap script, configure your personal git settings using the template:
+```bash
+cp dotfiles/git/.gitconfig.template ~/.gitconfig
+# Then edit ~/.gitconfig with your personal information
+```
+
+Store sensitive environment variables in `~/.zsh_secrets` (automatically excluded from git tracking).
 
 ## 🐛 Troubleshooting
 
