@@ -4,6 +4,9 @@
 *.key
 *.session
 
+# Git config (contains personal info)
+dotfiles/git/.gitconfig
+
 # Raycast exports are fine to commit, but ignore random dumps
 *.rayconfig.backup
 

@@ -1,7 +1,0 @@
-[user]
-	email = your-email@example.com
-	name = Your Full Name
-[push]
-	default = current
-	autoSetupRemote = true
-	followTags = true
