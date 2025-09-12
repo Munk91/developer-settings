@@ -16,7 +16,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -81,7 +80,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
   git
   z
-  zsh-autosuggestions
   aws
   kubectl
 )
@@ -149,3 +147,6 @@ alias claude="/Users/mimu/.claude/local/claude"
 
 # Load personal secrets (not in git)
 [[ -f "$HOME/.zsh_secrets" ]] && source "$HOME/.zsh_secrets"
+
+source $HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
